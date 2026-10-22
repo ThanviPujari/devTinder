@@ -13,7 +13,7 @@ const adminAuth = (req,res,next)=>{
 const userAuth = (req,res,next)=>{
     console.log('user Auth is getting checked.');
     const token = '123';
-    const isuserAuthorized = token === '13';
+    const isuserAuthorized = token === '123';
     if(!isuserAuthorized) {
         res.status(401).send('You are not a authorized user.')
     }
