@@ -11,7 +11,7 @@ app.post('/signup', async (req, res) => {
     else {
         const user = new User(req.body);
         try {
-            if(req.body.skills.length > 10) {
+            if(req.body.skills?.length > 10) {
                 throw new Error("More than 10 skills aren't allowed.")
             }
             await user.save();
@@ -65,7 +65,7 @@ app.patch('/user/:id',async (req,res)=>{
         if(!isUpdateAllowed) {
             throw new Error('Update not allowed.')
         }
-       if(req.body.skills.length > 10) {
+       if(req.body.skills?.length > 10) {
                 throw new Error("More than 10 skills aren't allowed.")
             }
             const user = await User.findOneAndUpdate({_id : userId}, req.body, {returnDocument : "after", runValidators : "true"});
