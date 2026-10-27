@@ -11,6 +11,9 @@ app.post('/signup', async (req, res) => {
     else {
         const user = new User(req.body);
         try {
+            if(req.body.skills.length > 10) {
+                throw new Error("More than 10 skills aren't allowed.")
+            }
             await user.save();
             res.send('User Added Successfully.')
         }
@@ -54,10 +57,18 @@ app.delete('/user', async (req,res)=>{
      })
 
 })
-app.patch('/user',async (req,res)=>{
-    const email = req.body.email;
+app.patch('/user/:id',async (req,res)=>{
+    const userId = req.params.id;
     try {
-            const user = await User.findOneAndUpdate({emailId : email}, req.body, {returnDocument : "after", runValidators : "true"});
+        const ALLOWED_UPDATES = ['photourl', 'about', 'gender', 'age', 'firstName', 'lastName', 'password','skills'];
+        const isUpdateAllowed = Object.keys(req.body).every((k)=>ALLOWED_UPDATES.includes(k));
+        if(!isUpdateAllowed) {
+            throw new Error('Update not allowed.')
+        }
+       if(req.body.skills.length > 10) {
+                throw new Error("More than 10 skills aren't allowed.")
+            }
+            const user = await User.findOneAndUpdate({_id : userId}, req.body, {returnDocument : "after", runValidators : "true"});
             res.status(200).json({
             "status" : "User successfully updated.",
             "updatedData" : user

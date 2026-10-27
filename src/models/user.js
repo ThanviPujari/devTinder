@@ -44,6 +44,9 @@ const userSchema = new Schema({
   photoUrl : {
     type : String,
     default : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStxJY-xf_tITnktU_jDrSwDCT20l87tt4Ol6J-1BY-2Q&s=10'
+  },
+  skills : {
+    type : Array,
   }
 }, {timestamps: true});
 
