@@ -4,9 +4,8 @@ const userAuth = async (req,res,next)=>{
     try {
     // Read token 
     const {token} = req.cookies;
-    console.log(token);
     if(!token) {
-        throw new Error('Cookie Expired.')
+        throw new Error('Cookie Expired or Invalid Token')
     }
     // Validate the token
     const decodedMessage = jwt.verify(token, 'DevTinder@999');
